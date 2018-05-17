@@ -1,6 +1,5 @@
-package com.witold.vistar.contract;
+package com.witold.vistar.contract.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Contract {
@@ -15,10 +14,7 @@ public class Contract {
     private List<Good> goods;
 
     public Contract(){
-//        this.seller=new Contractor();
-//        this.buyer=new Contractor();
-//        this.goods = new ArrayList<>();
-    }
+   }
 
     public String getNumber() {
         return number;

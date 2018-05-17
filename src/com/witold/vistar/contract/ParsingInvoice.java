@@ -1,5 +1,8 @@
 package com.witold.vistar.contract;
 
+import com.witold.vistar.contract.entity.Contract;
+import com.witold.vistar.contract.entity.Contractor;
+import com.witold.vistar.contract.entity.Good;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

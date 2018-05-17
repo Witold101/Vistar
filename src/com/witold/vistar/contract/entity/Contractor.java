@@ -1,4 +1,4 @@
-package com.witold.vistar.contract;
+package com.witold.vistar.contract.entity;
 
 import java.util.List;
 
