@@ -1,55 +1,79 @@
 package com.witold.vistar.contract.entity;
 
-public class Good {
+import com.witold.vistar.contract.db.UmDB;
+import com.witold.vistar.contract.localisationClass.LocalText;
 
-    private int id;
-    private String name;
-    private String nameRus;
-    private String namePl;
-    private String um; //Единица измерения
+/**
+ * Класс описывает товар
+ */
+
+public class Good extends Entity {
+
+    private LocalText name;
+    private LocalText fullName;
+    private Um um; //Единица измерения
     private String value;
     private String cost;
     private String vat;
-    private String summ;
+    private String sum;
+    private String cod;
 
-    public int getId() {
-        return id;
+    public Good() {
+        super();
+        this.name = new LocalText();
+        this.fullName = new LocalText();
+        this.um = new Um();
+        this.value = "";
+        this.cost = "";
+        this.vat = "";
+        this.sum = "";
+        this.cod = "";
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Good(LocalText name, LocalText fullName, Um um, String value, String cost, String vat, String sum, String cod) {
         this.name = name;
+        this.fullName = fullName;
+        this.um = um;
+        this.value = value;
+        this.cost = cost;
+        this.vat = vat;
+        this.sum = sum;
+        this.cod = cod;
     }
 
-    public String getUm() {
-        return um;
+    public int getName() {
+        return this.name.getId();
     }
 
-    public void setUm(String um) {
+    public String getName(int language) {
+        return this.name.getLocalText(language);
+    }
+
+    public int getFullName() {
+        return this.fullName.getId();
+    }
+
+    public String getFullName(int language) {
+        return this.fullName.getLocalText(language);
+    }
+
+    public void setName(int language, String text) {
+        this.name.setLocal(language, text);
+    }
+
+    public void setUm(Um um) {
         this.um = um;
     }
 
-    public String getNameRus() {
-        return nameRus;
+    public void setUmFromDB(String cod) {
+        UmDB umDB = UmDB.getInstance();
+        if (umDB.getElementFromCod(cod) != null) {
+            this.um = umDB.getElementFromCod(cod);
+        }
     }
 
-    public void setNameRus(String nameRus) {
-        this.nameRus = nameRus;
-    }
-
-    public String getNamePl() {
-        return namePl;
-    }
-
-    public void setNamePl(String namePl) {
-        this.namePl = namePl;
+    public Um getUm() {
+        return um;
     }
 
     public String getValue() {
@@ -76,26 +100,34 @@ public class Good {
         this.vat = vat;
     }
 
-    public String getSumm() {
-        return summ;
+    public String getSum() {
+        return sum;
     }
 
-    public void setSumm(String summ) {
-        this.summ = summ;
+    public void setSum(String sum) {
+        this.sum = sum;
+    }
+
+    public String getCod() {
+        return cod;
+    }
+
+    public void setCod(String cod) {
+        this.cod = cod;
     }
 
     @Override
     public String toString() {
         return "Good{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", nameRus='" + nameRus + '\'' +
-                ", namePl='" + namePl + '\'' +
-                ", um='" + um + '\'' +
-                ", value='" + value + '\'' +
-                ", cost='" + cost + '\'' +
-                ", vat='" + vat + '\'' +
-                ", summ='" + summ + '\'' +
+                "id=" + getId() +
+                "Cod=" + getCod() +
+                ", name='" + getName() + '\'' +
+                ", nameFull='" + getFullName() + '\'' +
+                ", um='" + getUm() + '\'' +
+                ", value='" + getValue() + '\'' +
+                ", cost='" + getCost() + '\'' +
+                ", vat='" + getVat() + '\'' +
+                ", summ='" + getSum() + '\'' +
                 '}';
     }
 }

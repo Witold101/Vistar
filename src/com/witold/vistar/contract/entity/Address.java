@@ -1,22 +1,13 @@
 package com.witold.vistar.contract.entity;
 
-public class Address {
+/**
+ * Класс описывающий Адреса клиентов
+ */
 
-    private int id;
-    private String address;
+public class Address extends Entity {
 
 
-    public int getId() {
-        return id;
+    public Address() {
+        super();
     }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
 }

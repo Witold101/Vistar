@@ -1,8 +1,13 @@
 package com.witold.vistar.contract.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Contract {
+/**
+ * Класс модеожит в себе данные необходимые для генерации контракта
+ */
+
+public class Contract extends Entity{
     private String number;
     private String place;
     private String date;
@@ -13,7 +18,17 @@ public class Contract {
     private Contractor buyer;
     private List<Good> goods;
 
-    public Contract(){
+    public Contract() {
+        super();
+        this.number = "";
+        this.place = "";
+        this.date = "";
+        this.paymentType = "";
+        this.priceNet = "";
+        this.currency = "";
+        this.seller = new Contractor();
+        this.buyer = new Contractor();
+        this.goods = new ArrayList<>();
    }
 
     public String getNumber() {

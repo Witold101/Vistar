@@ -1,8 +1,10 @@
-package com.witold.vistar.contract;
+package com.witold.vistar.contract.parsing;
 
 import com.witold.vistar.contract.entity.Contract;
 import com.witold.vistar.contract.entity.Contractor;
 import com.witold.vistar.contract.entity.Good;
+import com.witold.vistar.contract.entity.Um;
+import com.witold.vistar.contract.localisationClass.Languages;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,14 +19,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParsingInvoice {
 
-    public static Contract getContract(String fileName) throws ParserConfigurationException, IOException,
-            SAXException
-    {
+public class ParsingInvoicePL implements GetDateForContract {
+    private String fileName;
+    private int language;
+
+    public ParsingInvoicePL(String fileName, int language) {
+        this.fileName = fileName;
+        this.language = language;
+    }
+
+    //Return Contract from file
+    public Contract getDateForContract() throws ParserConfigurationException, IOException,
+            SAXException {
 
         Contract contract = new Contract();
-        File file = new File(fileName);
+        File file = new File(this.fileName);
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
@@ -120,34 +130,42 @@ public class ParsingInvoice {
 
         NodeList nodeList = document.getElementsByTagName("position");
 
-        for (int i = 0; i < nodeList.getLength(); i++)
-        {
-            if (nodeList.item(i).getNodeType()== Node.ELEMENT_NODE){
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            if (nodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
 
                 Element positionElement = (Element) nodeList.item(i);
                 Good good = new Good();
                 good.setId(i);
                 NodeList childNodes = positionElement.getChildNodes();
-                for (int k = 0; k < childNodes.getLength(); k++){
-                    if (childNodes.item(k).getNodeType()==Node.ELEMENT_NODE){
+                for (int k = 0; k < childNodes.getLength(); k++) {
+                    if (childNodes.item(k).getNodeType() == Node.ELEMENT_NODE) {
 
                         Element child = (Element) childNodes.item(k);
-                        switch (child.getNodeName()){
-                            case "name":{
-                                good.setNamePl(child.getTextContent());
-                            } break;
-                            case "price-net":{
+                        switch (child.getNodeName()) {
+                            case "name": {
+                                good.setName(this.language, child.getTextContent());
+                            }
+                            break;
+                            case "price-net": {
                                 good.setCost(child.getTextContent());
-                            } break;
-                            case "quantity":{
+                            }
+                            break;
+                            case "quantity": {
                                 good.setValue(child.getTextContent());
-                            } break;
-                            case "total-price-net":{
-                                good.setSumm(child.getTextContent());
-                            } break;
-                            case "quantity-unit":{
-                                good.setUm(child.getTextContent());
-                            } break;
+                            }
+                            break;
+                            case "total-price-net": {
+                                good.setSum(child.getTextContent());
+                            }
+                            break;
+                            case "quantity-unit": {
+                                Um um = new Um();
+                                um.setFullName(Languages.LANGUAGES_PL,child.getTextContent());
+                                um.setName(Languages.LANGUAGES_PL,child.getTextContent());
+                                um.setCod("0");
+                                good.setUm(um);
+                            }
+                            break;
                         }
 
                     }
@@ -160,6 +178,4 @@ public class ParsingInvoice {
 
         return contract;
     }
-
-
 }

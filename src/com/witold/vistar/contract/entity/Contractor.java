@@ -1,9 +1,10 @@
 package com.witold.vistar.contract.entity;
 
-import java.util.List;
+/**
+ * Класс описывает данные сторон в сделке
+ */
 
-public class Contractor {
-    private int id=0;
+public class Contractor extends Entity {
     private String name;
     private String fullName;
     private String address;
@@ -16,8 +17,20 @@ public class Contractor {
     private String vat;
     private String employee;
 
-    public int getId() {
-        return id;
+    public Contractor() {
+        super();
+        this.name = "";
+        this.fullName = "";
+        this.address = "";
+        this.addressPostCode = "";
+        this.addressesCity = "";
+        this.addressesCountry = "";
+        this.phone = "";
+        this.account = "";
+        this.bank = "";
+        this.vat = "";
+        this.employee = "";
+
     }
 
     public String getName() {
@@ -111,7 +124,7 @@ public class Contractor {
     @Override
     public String toString() {
         return "Contractor{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", address=" + address +
